@@ -89,7 +89,7 @@ export const MyReportsPage: React.FC = () => {
                 </Link>
                 <button 
                   onClick={() => {
-                    navigator.clipboard.writeText(`${window.location.origin}/restaurant/${inc.fbo_slug}`);
+                    navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#/restaurant/${inc.fbo_slug}`);
                     alert('Incident link copied!');
                   }} 
                   className="btn-secondary" 

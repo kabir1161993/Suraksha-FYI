@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { store } from '../services/store';
+import { dbEngine } from '../services/db';
 import { scanImageForFSSAI } from '../services/ocrService';
 import { HazardCategory, OutletCategory, MerchantResponse, RequestedAction, HazardSeverity } from '../types';
 import { 
@@ -72,7 +73,13 @@ export const ReportWizardPage: React.FC = () => {
   };
 
   // Submit Final Report
-  const handleSubmitReport = () => {
+  const handleSubmitReport = async () => {
+    const rateCheck = await dbEngine.checkRateLimit('report_submission', 5, 3600000);
+    if (!rateCheck.allowed) {
+      alert('Rate limit exceeded: You can submit up to 5 reports per hour from this device to prevent spam.');
+      return;
+    }
+
     let calculatedSeverity: HazardSeverity = 'P1_MODERATE';
     if (hazardPrimary === 'FOREIGN_OBJECT' || hazardPrimary === 'FOOD_POISONING' || hazardPrimary === 'VEG_NONVEG_CONTAMINATION' || hazardPrimary === 'CHEMICAL_ADULTERANT') {
       calculatedSeverity = 'P0_CRITICAL';

@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
+import { MobileBottomNav } from './components/common/MobileBottomNav';
 
 // Public Pages
 import { LandingPage } from './pages/LandingPage';
@@ -41,6 +42,7 @@ export function App() {
           </Routes>
         </main>
         <Footer />
+        <MobileBottomNav />
       </div>
     </Router>
   );

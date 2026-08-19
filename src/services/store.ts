@@ -1,5 +1,6 @@
 import { Incident, FBOProfile, DispatchEvent, AdminUser, ModerationStatus } from '../types';
 import { INITIAL_INCIDENTS, INITIAL_DISPATCHES } from './mockData';
+import { dbEngine } from './db';
 
 const INCIDENTS_KEY = 'suraksha_incidents_v1';
 const MY_REPORTS_KEY = 'suraksha_my_reports_v1';
@@ -16,9 +17,30 @@ class AppStore {
   private adminUser: AdminUser | null = null;
   private currentLanguage: 'en' | 'hi' = 'en';
   private listeners: Set<Listener> = new Set();
+  private isInitialized = false;
 
   constructor() {
     this.loadFromStorage();
+    this.initDatabase();
+  }
+
+  private async initDatabase() {
+    try {
+      await dbEngine.init();
+      const dbIncidents = await dbEngine.getAllIncidents();
+      const dbDispatches = await dbEngine.getAllDispatches();
+
+      if (dbIncidents && dbIncidents.length > 0) {
+        this.incidents = dbIncidents;
+      }
+      if (dbDispatches && dbDispatches.length > 0) {
+        this.dispatches = dbDispatches;
+      }
+      this.isInitialized = true;
+      this.notify();
+    } catch (err) {
+      console.warn('Database initialization warning, using localStorage/in-memory store:', err);
+    }
   }
 
   private loadFromStorage() {
@@ -40,7 +62,6 @@ class AppStore {
         this.currentLanguage = storedLang;
       }
     } catch (err) {
-      console.error('Failed to load storage:', err);
       this.incidents = INITIAL_INCIDENTS;
       this.dispatches = INITIAL_DISPATCHES;
     }
@@ -105,6 +126,9 @@ class AppStore {
     this.incidents.unshift(created);
     this.myReportIds.unshift(incident_id);
 
+    // Save to IndexedDB asynchronously
+    dbEngine.saveIncident(created);
+
     // Check cluster condition: 3+ reports for same FBO in 7 days
     this.checkClusterAndTriggerDispatch(created.fssai_license, created.fbo_name, created.city, created.ddo_email);
 
@@ -116,18 +140,20 @@ class AppStore {
     const incident = this.incidents.find((i) => i.incident_id === id);
     if (incident) {
       incident.upvotes += 1;
+      dbEngine.saveIncident(incident);
       this.saveToStorage();
     }
   }
 
   // --- ADMIN MODERATION METHODS ---
-  public setModerationStatus(id: string, status: ModerationStatus, reason?: string) {
+  public setModerationStatus(id: string, status: ModerationStatus) {
     const incident = this.incidents.find((i) => i.incident_id === id);
     if (incident) {
       incident.moderation_status = status;
       if (status === 'APPROVED') {
         incident.fso_status = 'Under FSO Review';
       }
+      dbEngine.saveIncident(incident);
       this.saveToStorage();
     }
   }
@@ -136,6 +162,7 @@ class AppStore {
     const idx = this.incidents.findIndex((i) => i.incident_id === updated.incident_id);
     if (idx !== -1) {
       this.incidents[idx] = updated;
+      dbEngine.saveIncident(updated);
       this.saveToStorage();
     }
   }
@@ -152,12 +179,11 @@ class AppStore {
     if (matching.length >= 3) {
       const clusterId = `CLU-2026-${Math.floor(100 + Math.random() * 900)}`;
       
-      // Update incidents with cluster ID
       matching.forEach((m) => {
         m.cluster_id = clusterId;
+        dbEngine.saveIncident(m);
       });
 
-      // Check if dispatch already exists
       const existing = this.dispatches.find((d) => d.fssai_license === fssai);
       if (!existing) {
         const newDispatch: DispatchEvent = {
@@ -173,6 +199,7 @@ class AppStore {
           status: 'SENT'
         };
         this.dispatches.unshift(newDispatch);
+        dbEngine.saveDispatch(newDispatch);
       }
     }
   }
@@ -182,11 +209,12 @@ class AppStore {
     if (disp) {
       disp.status = status;
       disp.fso_response_date = new Date().toISOString();
+      dbEngine.saveDispatch(disp);
 
-      // Also update linked incidents
       this.incidents.forEach((inc) => {
         if (inc.fssai_license === disp.fssai_license) {
           inc.fso_status = status === 'INSPECTED' ? 'Inspected & Action Taken' : 'Under FSO Review';
+          dbEngine.saveIncident(inc);
         }
       });
 

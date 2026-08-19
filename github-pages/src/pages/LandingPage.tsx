@@ -6,15 +6,10 @@ import { HazardMap } from '../components/map/HazardMap';
 import { 
   Camera, 
   MapPin, 
-  AlertTriangle, 
-  ShieldCheck, 
   TrendingUp, 
-  ArrowRight, 
-  CheckCircle2, 
   Zap, 
   Clock,
   Sparkles,
-  Search,
   Filter
 } from 'lucide-react';
 
@@ -33,7 +28,7 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '3rem' }}>
+    <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '2rem' }}>
       
       {/* Sticky Floating Action Button (FAB) */}
       <button 
@@ -41,75 +36,75 @@ export const LandingPage: React.FC = () => {
         className="fab-button"
         aria-label="Report a Hazard Now"
       >
-        <Camera size={22} />
-        <span>{lang === 'hi' ? 'रिपोर्ट करें (< 25s)' : 'Report Now (< 25s)'}</span>
+        <Camera size={20} />
+        <span>{lang === 'hi' ? 'रिपोर्ट दर्ज करें' : 'Report Now (< 25s)'}</span>
       </button>
 
       {/* Hero Section */}
       <section style={{
         backgroundColor: '#0F172A',
         color: '#fff',
-        padding: '2.5rem 0 3rem 0',
+        padding: '2rem 0 2.5rem 0',
         borderBottom: '1px solid #1E293B',
         background: 'radial-gradient(circle at top right, #1E293B 0%, #0F172A 60%)'
       }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', alignItems: 'center' }}>
             <div>
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: '0.375rem',
                 backgroundColor: 'rgba(245, 158, 11, 0.15)',
                 border: '1px solid rgba(245, 158, 11, 0.3)',
                 color: '#F59E0B',
-                padding: '0.375rem 0.875rem',
+                padding: '0.35rem 0.75rem',
                 borderRadius: '9999px',
-                fontSize: '0.8125rem',
+                fontSize: '0.75rem',
                 fontWeight: 700,
-                marginBottom: '1rem'
+                marginBottom: '0.875rem'
               }}>
                 <Zap size={14} />
-                {lang === 'hi' ? 'शून्य लॉगिन • 25 सेकंड में रिपोर्ट' : 'Zero Login Wall • < 25 Seconds Submission'}
+                {lang === 'hi' ? 'बिना लॉगिन • 25 सेकंड में रिपोर्ट' : 'Zero Login Wall • < 25s Submission'}
               </div>
 
               <h1 style={{
-                fontSize: '2.25rem',
+                fontSize: '1.875rem',
                 fontWeight: 800,
                 lineHeight: 1.2,
                 letterSpacing: '-0.03em',
-                marginBottom: '1rem',
+                marginBottom: '0.875rem',
                 color: '#fff'
               }}>
                 {lang === 'hi' 
-                  ? 'भारत का खुला खाद्य सुरक्षा मानचित्र और नागरिक रजिस्ट्रार' 
+                  ? 'भारत का खुला खाद्य सुरक्षा मानचित्र और नागरिक पोर्टल' 
                   : 'India\'s Open Food Safety Registry & Live Hazard Map'}
               </h1>
 
               <p style={{
-                fontSize: '1.05rem',
+                fontSize: '0.95rem',
                 color: '#94A3B8',
-                lineHeight: 1.6,
-                marginBottom: '1.75rem'
+                lineHeight: 1.5,
+                marginBottom: '1.5rem'
               }}>
                 {lang === 'hi'
-                  ? 'मिर्च में मिलावट या बिरयानी में कीड़ा? बिना किसी आधार या OTP के 25 सेकंड में फोटो खींचकर रिपोर्ट करें।'
-                  : 'Found contaminated or adulterated food? Take a photo, tag the location, and publish to the live map instantly — routing signals straight to Food Safety Officers.'}
+                  ? 'मिर्च में मिलावट या बिरयानी में कीड़ा? 25 सेकंड में फोटो खींचकर रिपोर्ट करें और लाइव मैप पर देखें।'
+                  : 'Found contaminated or adulterated food? Take a photo, tag location, and publish to the live map instantly.'}
               </p>
 
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <button 
                   onClick={() => navigate('/report')}
                   className="btn-primary"
-                  style={{ fontSize: '1rem', padding: '0.875rem 1.75rem' }}
+                  style={{ flex: 1, minWidth: '160px', justifyContent: 'center' }}
                 >
-                  <Camera size={20} />
-                  {lang === 'hi' ? 'खतरे की रिपोर्ट करें' : 'Report a Hazard Now'}
+                  <Camera size={18} />
+                  {lang === 'hi' ? 'रिपोर्ट दर्ज करें' : 'Report Hazard'}
                 </button>
 
-                <Link to="/map" className="btn-secondary" style={{ fontSize: '1rem', padding: '0.875rem 1.75rem' }}>
-                  <MapPin size={20} />
-                  {lang === 'hi' ? 'लाइव मैप देखें' : 'Explore Live Map'}
+                <Link to="/map" className="btn-secondary" style={{ flex: 1, minWidth: '150px', justifyContent: 'center' }}>
+                  <MapPin size={18} />
+                  {lang === 'hi' ? 'लाइव मैप देखें' : 'Explore Map'}
                 </Link>
               </div>
             </div>
@@ -118,53 +113,53 @@ export const LandingPage: React.FC = () => {
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '1rem'
+              gap: '0.75rem'
             }}>
-              <div className="glass-card-dark" style={{ padding: '1.25rem' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#F59E0B', fontFamily: 'var(--font-mono)' }}>
+              <div className="glass-card-dark" style={{ padding: '1rem' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#F59E0B', fontFamily: 'var(--font-mono)' }}>
                   1,247
                 </div>
-                <div style={{ fontSize: '0.8125rem', color: '#94A3B8', fontWeight: 600 }}>
+                <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600 }}>
                   Reports This Month
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#22C55E', marginTop: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <TrendingUp size={12} /> +23% vs last month
+                <div style={{ fontSize: '0.6875rem', color: '#22C55E', marginTop: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                  <TrendingUp size={10} /> +23%
                 </div>
               </div>
 
-              <div className="glass-card-dark" style={{ padding: '1.25rem' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#EF4444', fontFamily: 'var(--font-mono)' }}>
+              <div className="glass-card-dark" style={{ padding: '1rem' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#EF4444', fontFamily: 'var(--font-mono)' }}>
                   84
                 </div>
-                <div style={{ fontSize: '0.8125rem', color: '#94A3B8', fontWeight: 600 }}>
-                  Restaurants Flagged
+                <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600 }}>
+                  Flagged Outlets
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#94A3B8', marginTop: '0.25rem' }}>
-                  High risk cluster &gt; 3 reports
+                <div style={{ fontSize: '0.6875rem', color: '#94A3B8', marginTop: '0.2rem' }}>
+                  High Risk Cluster
                 </div>
               </div>
 
-              <div className="glass-card-dark" style={{ padding: '1.25rem' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#22C55E', fontFamily: 'var(--font-mono)' }}>
+              <div className="glass-card-dark" style={{ padding: '1rem' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#22C55E', fontFamily: 'var(--font-mono)' }}>
                   12
                 </div>
-                <div style={{ fontSize: '0.8125rem', color: '#94A3B8', fontWeight: 600 }}>
-                  FSO Inspections Triggered
+                <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600 }}>
+                  FSO Inspections
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#22C55E', marginTop: '0.25rem' }}>
-                  Verified regulatory action
+                <div style={{ fontSize: '0.6875rem', color: '#22C55E', marginTop: '0.2rem' }}>
+                  Action Taken
                 </div>
               </div>
 
-              <div className="glass-card-dark" style={{ padding: '1.25rem' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#3B82F6', fontFamily: 'var(--font-mono)' }}>
+              <div className="glass-card-dark" style={{ padding: '1rem' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#3B82F6', fontFamily: 'var(--font-mono)' }}>
                   &lt; 25s
                 </div>
-                <div style={{ fontSize: '0.8125rem', color: '#94A3B8', fontWeight: 600 }}>
-                  Average Report Time
+                <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600 }}>
+                  Avg Submission
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#3B82F6', marginTop: '0.25rem' }}>
-                  Zero registration required
+                <div style={{ fontSize: '0.6875rem', color: '#3B82F6', marginTop: '0.2rem' }}>
+                  Zero Login
                 </div>
               </div>
             </div>
@@ -173,72 +168,65 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Main Map & Live Feed Content */}
-      <div className="container" style={{ marginTop: '2.5rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
+      <div className="container" style={{ marginTop: '1.75rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <MapPin color="#F59E0B" />
-              {lang === 'hi' ? 'लाइव खाद्य सुरक्षा मानचित्र' : 'Live Food Safety Map'}
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+              <MapPin color="#F59E0B" size={20} />
+              {lang === 'hi' ? 'लाइव मैप' : 'Live Hazard Map'}
             </h2>
-            <p style={{ fontSize: '0.875rem', color: '#64748B' }}>
-              Real-time crowdsourced violation reports across India. Click pins to inspect details.
+            <p style={{ fontSize: '0.8125rem', color: '#64748B' }}>
+              Real-time violation reports across Indian cities.
             </p>
           </div>
 
-          <Link to="/map" className="btn-secondary" style={{ fontSize: '0.875rem' }}>
-            <Filter size={16} /> Full Map & Filters →
+          <Link to="/map" className="btn-secondary" style={{ fontSize: '0.8125rem', padding: '0.4rem 0.75rem' }}>
+            <Filter size={14} /> Full Map & Filters →
           </Link>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
           {/* Map Container */}
-          <div style={{ gridColumn: 'span 2' }}>
-            <HazardMap incidents={incidents} height="480px" />
+          <div>
+            <HazardMap incidents={incidents} height="380px" />
           </div>
 
           {/* Live Activity Feed */}
-          <div className="glass-card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #E2E8F0', paddingBottom: '0.75rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div className="glass-card" style={{ padding: '1rem', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>
+              <h3 style={{ fontSize: '0.95rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
                 <Clock size={16} color="#F59E0B" /> Live Incident Feed
               </h3>
-              <span style={{ fontSize: '0.7rem', padding: '0.2rem 0.5rem', backgroundColor: '#FEF3C7', color: '#B45309', borderRadius: '4px', fontWeight: 700 }}>
+              <span style={{ fontSize: '0.65rem', padding: '0.15rem 0.4rem', backgroundColor: '#FEF3C7', color: '#B45309', borderRadius: '4px', fontWeight: 700 }}>
                 POLLED LIVE
               </span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', overflowY: 'auto', maxHeight: '400px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem', overflowY: 'auto', maxHeight: '320px' }}>
               {incidents.slice(0, 5).map((inc) => (
                 <div 
                   key={inc.incident_id} 
                   onClick={() => navigate(`/restaurant/${inc.fbo_slug}`)}
                   style={{
-                    padding: '0.75rem',
+                    padding: '0.625rem',
                     borderRadius: '0.5rem',
                     backgroundColor: '#F8FAFC',
                     border: '1px solid #E2E8F0',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
+                    cursor: 'pointer'
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#F59E0B')}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#E2E8F0')}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.375rem' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0F172A' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.25rem' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.8125rem', color: '#0F172A' }}>
                       {inc.fbo_name}
                     </div>
-                    <span className={inc.hazard_severity === 'P0_CRITICAL' ? 'badge-p0' : 'badge-p1'}>
+                    <span className={inc.hazard_severity === 'P0_CRITICAL' ? 'badge-p0' : 'badge-p1'} style={{ fontSize: '0.65rem' }}>
                       {inc.hazard_severity}
                     </span>
                   </div>
 
-                  <div style={{ fontSize: '0.75rem', color: '#64748B', marginBottom: '0.375rem' }}>
+                  <div style={{ fontSize: '0.7rem', color: '#64748B' }}>
                     📍 {inc.ward}, {inc.city}
                   </div>
-
-                  <p style={{ fontSize: '0.8125rem', color: '#334155', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    "{inc.user_description}"
-                  </p>
                 </div>
               ))}
             </div>
@@ -250,45 +238,45 @@ export const LandingPage: React.FC = () => {
       {showBottomSheet && (
         <div style={{
           position: 'fixed',
-          bottom: '1rem',
+          bottom: '5.5rem',
           left: '50%',
           transform: 'translateX(-50%)',
           width: '92%',
-          maxWidth: '540px',
+          maxWidth: '480px',
           backgroundColor: '#0F172A',
           color: '#fff',
-          padding: '1.25rem',
-          borderRadius: '1rem',
+          padding: '1rem 1.25rem',
+          borderRadius: '0.875rem',
           boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
-          zIndex: 1050,
+          zIndex: 1040,
           border: '1px solid #334155'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, color: '#F59E0B' }}>
-              <Sparkles size={18} /> Found bad or contaminated food?
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', fontWeight: 700, color: '#F59E0B', fontSize: '0.875rem' }}>
+              <Sparkles size={16} /> Report in &lt; 25 seconds
             </div>
             <button 
               onClick={() => setShowBottomSheet(false)}
-              style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '1.2rem', padding: '0 0.5rem' }}
+              style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: '1.2rem', padding: '0 0.25rem' }}
             >
               ×
             </button>
           </div>
-          <p style={{ fontSize: '0.875rem', color: '#CBD5E1', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Report in &lt; 25 seconds. No account, no Aadhaar, no OTP needed. Your report is published immediately to the public live map.
+          <p style={{ fontSize: '0.8125rem', color: '#CBD5E1', marginBottom: '0.875rem', lineHeight: 1.4 }}>
+            Found bad food? No account or OTP needed. Your report is published live on the map.
           </p>
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button 
               onClick={() => navigate('/report')}
               className="btn-primary"
-              style={{ flex: 1, justifyContent: 'center', fontSize: '0.875rem' }}
+              style={{ flex: 1, justifyContent: 'center', fontSize: '0.8125rem', padding: '0.5rem' }}
             >
-              <Camera size={16} /> Report Now
+              <Camera size={14} /> Report Now
             </button>
             <button 
               onClick={() => setShowBottomSheet(false)}
               className="btn-secondary"
-              style={{ fontSize: '0.875rem', backgroundColor: 'transparent', color: '#94A3B8', borderColor: '#334155' }}
+              style={{ fontSize: '0.8125rem', padding: '0.5rem 0.875rem', backgroundColor: 'transparent', color: '#94A3B8', borderColor: '#334155' }}
             >
               Got it
             </button>

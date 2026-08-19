@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { store } from '../services/store';
+import { dbEngine } from '../services/db';
 import { scanImageForFSSAI } from '../services/ocrService';
 import { HazardCategory, OutletCategory, MerchantResponse, RequestedAction, HazardSeverity } from '../types';
 import { 
@@ -72,7 +73,13 @@ export const ReportWizardPage: React.FC = () => {
   };
 
   // Submit Final Report
-  const handleSubmitReport = () => {
+  const handleSubmitReport = async () => {
+    const rateCheck = await dbEngine.checkRateLimit('report_submission', 5, 3600000);
+    if (!rateCheck.allowed) {
+      alert('Rate limit exceeded: You can submit up to 5 reports per hour from this device to prevent spam.');
+      return;
+    }
+
     let calculatedSeverity: HazardSeverity = 'P1_MODERATE';
     if (hazardPrimary === 'FOREIGN_OBJECT' || hazardPrimary === 'FOOD_POISONING' || hazardPrimary === 'VEG_NONVEG_CONTAMINATION' || hazardPrimary === 'CHEMICAL_ADULTERANT') {
       calculatedSeverity = 'P0_CRITICAL';
@@ -506,7 +513,7 @@ export const ReportWizardPage: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
             <button 
               onClick={() => {
-                const text = `I just reported a food safety hazard at ${fboName || 'a local restaurant'} on Suraksha.fyi in 25 seconds with zero login! See it on map: ${window.location.origin}/map`;
+                const text = `I just reported a food safety hazard at ${fboName || 'a local restaurant'} on Suraksha.fyi in 25 seconds with zero login! See it on map: ${window.location.origin}${window.location.pathname}#/map`;
                 window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
               }}
               className="btn-primary" 

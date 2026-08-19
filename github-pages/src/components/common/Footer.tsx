@@ -56,16 +56,9 @@ export const Footer: React.FC = () => {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
               <li><Link to="/api" style={{ color: '#94A3B8' }}>Public REST API Docs</Link></li>
               <li>
-                <a 
-                  href="/api/v1/data/export.csv" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert('Downloading Suraksha.fyi open dataset CSV...');
-                  }}
-                  style={{ color: '#F59E0B', display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}
-                >
+                <Link to="/api" style={{ color: '#F59E0B', display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
                   <Download size={14} /> Download Dataset (CSV)
-                </a>
+                </Link>
               </li>
               <li><Link to="/about" style={{ color: '#94A3B8' }}>FSSAI DDO Routing Topology</Link></li>
               <li><Link to="/about" style={{ color: '#94A3B8' }}>Automated RTI Engine</Link></li>
